@@ -4,15 +4,16 @@ local widget = require("widget")
 c = {"простой", "средний", "сложный"}
 function scene:create( event )
 	local sceneGroup = self.view
-	display.newRoundedRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth / 4 * 3 - 20, display.contentHeight / 4 * 3, 20):setFillColor(1)
+	display.newRoundedRect(sceneGroup, display.contentCenterX, display.contentCenterY, 240, 300, 20):setFillColor(1)
 	local submitButton = widget.newButton
 	{
+		alpha = 1,
 		shape = "roundedRect",
-		radius = 5,
-		width = display.contentWidth / 3,
-		height = display.contentHeight / 6,
-		left = display.contentWidth / 3,
-		top = display.contentHeight / 3 * 2,
+		radius = 20,
+		width = 240,
+		height = 50,
+		left = 40,
+		top = 340,
 		labelColor = { default={0}, over={0.3} },
 		label = "Сыграть ещё",
 		onPress = function( event )
@@ -20,31 +21,43 @@ function scene:create( event )
 			composer.gotoScene("Scenes.game")
 		end
 	}
-	local ctext = display.newText("Выберите сложность", width / 2 + 10, height / 4 + 10, font, 20)
+	submitButton:setFillColor(1)
+	local restext = display.newText("Поражение!", 160, 115, font, 20)
+	local restext2 = display.newText("Счёт:" .. tostring(score), 160, 165, font, 20)
+	restext:setFillColor(0)
+	restext2:setFillColor(0)
+	sceneGroup:insert(restext)
+	sceneGroup:insert(restext2)
+	local ctext = display.newText("Выберите сложность", 160, 235, font, 20)
 	ctext:setFillColor(0)
 	cbutton = widget.newButton {
 		label = "средний",
-		
+		alpha = 1,
 		onPress = function ( event )
 			cnt = cnt + 1
 			cnt = cnt % 3
 			cbutton:setLabel(c[cnt + 1])
-			if cnt == 1 then speed = 0.7
-			elseif cnt == 2 then speed = 1.2
-			else speed = 0.5
+			if cnt == 1 then speed = speed2
+			elseif cnt == 2 then speed = speed3
+			else speed = speed1
 			end
 			end,
-		top = height / 4 + 35,
-		left = display.contentCenterX / 2 + 10,
+		top = 255,
+		left = width / 4,
 		labelColor = { default={0}, over={0.3} },
 	}
+	cbutton:setFillColor(1)
 	sceneGroup:insert(submitButton)
 	sceneGroup:insert(cbutton)
 	sceneGroup:insert(ctext)
 end
 
 function scene:show( event )
-	speed = 0.5
+	if event.phase == "will"
+	then
+		speed = speed2
+		cnt = 1
+	end
 end
 scene:addEventListener("show", scene)
 scene:addEventListener("create", scene)
