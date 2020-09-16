@@ -2,7 +2,7 @@ local composer = require("composer")
 local scene = composer.newScene()
 local widget = require("widget")
 require("randomizers")
-
+local is_pause = 0;
 function check_answer()
 	if (problem.x == 0 and answer == 2) or (problem.x == 106 and answer == 3 ) or (problem.x == -106 and answer == 1) then
 		return true
@@ -24,14 +24,17 @@ function onUpdate( event )
 	if problem.y> 350
 		then
 		if check_answer() then
+			if (SCORE == 4) then resumebutton:setLabel("ZA WARUDOO")
+			end
 			restart()
 		else
 			endGame()
-
 		end
 
 	else
+		if (is_pause == 0) then
 		problem.y = problem.y + SPEED
+		end
 	end
 end
 function endGame()
@@ -47,10 +50,38 @@ end
 function showscore ()
 	scoreText.text =scoreText.text:sub(0, scoreText.text:find(":")) .. tostring( SCORE )
 end
-
+function resume ()
+	is_pause = 0
+	resumebutton:setEnabled(0)
+	resumebutton.isVisible = false
+end
 function scene:create( event )
 	local sceneGroup = self.view
-
+	resumebutton = widget.newButton {
+		onPress = resume,
+		top = 0,
+		left = 0,
+		width = display.contentWidth,
+		height = display.contentHeight,
+		alpha = 1,
+		label = "Пауза. Нажми на любое место на экране, чтобы продолжить",
+		labelColor = { default={1}, over={1} },
+	}
+	resumebutton.isVisible = false;
+	local pausebutton = widget.newButton {
+		onPress = function ( event )
+			is_pause = 1
+			resumebutton.isVisible = true
+			resumebutton:setEnabled(1)
+		end,
+		defaultFile = "Images/pause_button.png",
+		top = 0,
+		left = display.contentWidth - 50,
+		width = 50,
+		height = 50,
+		fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 1, 0.2, 0.5, 1 } },
+		labelColor = { default={0}, over={0} },
+	}
 	leftbutton = widget.newButton {
 		onPress = function ( event )
 			if problem.x > -106
@@ -62,6 +93,7 @@ function scene:create( event )
 		left = 10,
 		width = 160,
 		height = 480,
+		alpha = 1,
 		labelColor = { default={1 - 215 / 255, 1 - 149 / 255, 1 - 71 / 255}, over={1 - 215 / 255, 1 - 149 / 255, 1 - 71 / 255 } },
 	}
 	leftbutton:setFillColor(20 / 255, 20 / 255, 20 / 255)
@@ -77,11 +109,14 @@ function scene:create( event )
 		left = 160,
 		width = 160,
 		height = 480,
+		alpha = 1,
 		labelColor = { default={0}, over={0} },
 	}
 	rightbutton:setFillColor(20 / 255, 20 / 255, 20 / 255)
 	sceneGroup:insert(leftbutton)
 	sceneGroup:insert(rightbutton)
+	sceneGroup:insert(pausebutton)
+	sceneGroup:insert(resumebutton)
 
 	scoreText = display.newText( "Очки: " .. tostring( SCORE ), 55, 0, font, 16)
 	sceneGroup:insert(scoreText)
@@ -101,28 +136,28 @@ function scene:create( event )
 	display.setDefault("background", 20 / 255, 20 / 255, 20 / 255)
 
 
-	b1 = display.newImageRect("ghost.png", 50, 50)
+	b1 = display.newImageRect("Images/ghost.png", 50, 50)
 	b1.x = 53
 	b1.y = 455
 	box1:insert(b1)
 	t1 = display.newText(0, 53, 430, font, 20)
 	box1:insert(t1)
 
-	b2 = display.newImageRect("ghost.png", 50, 50)
+	b2 = display.newImageRect("Images/ghost.png", 50, 50)
 	b2.x = 159
 	b2.y = 455
 	box2:insert(b2)
 	t2 = display.newText(0, 159, 430, font, 20)
 	box2:insert(t2)
 
-	b3 = display.newImageRect("ghost.png", 50, 50)
+	b3 = display.newImageRect("Images/ghost.png", 50, 50)
 	b3.x = 265
 	b3.y = 455
 	box3:insert(b3)
 	t3 = display.newText(0, 265, 430, font, 20)
 	box3:insert(t3)
 
-	ball = display.newImageRect( "pacman-D2_burned (1).png", 80, 80)
+	ball = display.newImageRect( "Images/pacman.png", 80, 80)
 	ball.x = 160
 	ball.y = 65
 	problem:insert(ball)

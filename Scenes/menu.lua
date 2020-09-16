@@ -39,7 +39,7 @@ function scene:create( event )
   	labelColor = { default={1}, over={1} },
   }
   local boundariestext = display.newText("Выберите границы чисел", 170, 200, font, 20)
-
+  
   sceneGroup:insert(cbutton)
   sceneGroup:insert(startbutton)
   sceneGroup:insert(ctext)

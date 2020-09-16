@@ -1,6 +1,6 @@
 function randomize_mul()
-	local x = math.random(LEFT_BOUND, RIGHT_BOUND)
-	local y = math.random(LEFT_BOUND, RIGHT_BOUND)
+	local x = math.random(lower_num_limit, upper_num_limit)
+	local y = math.random(lower_num_limit, upper_num_limit)
 	task.text = (tostring(x) .. " * " .. tostring(y))
   answer = math.random(1, 3)
 	print(answer)
@@ -14,12 +14,12 @@ function randomize_mul()
 		t1.text = x * y
 	end
 	if answer ~= 3 then
-		t3.text = math.random(LEFT_BOUND * LEFT_BOUND, RIGHT_BOUND * RIGHT_BOUND)
+		t3.text = math.random(lower_num_limit * lower_num_limit, upper_num_limit * upper_num_limit)
 	end
 	if answer ~= 2 then
-		t2.text = math.random(LEFT_BOUND * LEFT_BOUND, RIGHT_BOUND * RIGHT_BOUND)
+		t2.text = math.random(lower_num_limit * lower_num_limit, upper_num_limit * upper_num_limit)
 	end
 	if answer ~= 1 then
-		t1.text = math.random(LEFT_BOUND * LEFT_BOUND, RIGHT_BOUND * RIGHT_BOUND)
+		t1.text = math.random(lower_num_limit * lower_num_limit, upper_num_limit * upper_num_limit)
 	end
 end
