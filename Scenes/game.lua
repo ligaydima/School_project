@@ -2,6 +2,7 @@ local composer = require("composer")
 local scene = composer.newScene()
 local widget = require("widget")
 require("randomizers")
+
 local is_pause = 0;
 function check_answer()
 	if (problem.x == 0 and answer == 2) or (problem.x == 106 and answer == 3 ) or (problem.x == -106 and answer == 1) then
@@ -24,7 +25,7 @@ function onUpdate( event )
 	if problem.y> 350
 		then
 		if check_answer() then
-			if (SCORE == 4) then resumebutton:setLabel("ZA WARUDOO")
+			if (SCORE == 4) then pausetext.text = "ZA WARUDOO"
 			end
 			restart()
 		else
@@ -33,7 +34,7 @@ function onUpdate( event )
 
 	else
 		if (is_pause == 0) then
-		problem.y = problem.y + SPEED
+		problem.y = problem.y + speed
 		end
 	end
 end
@@ -48,10 +49,11 @@ function endGame()
 end
 
 function showscore ()
-	scoreText.text =scoreText.text:sub(0, scoreText.text:find(":")) .. tostring( SCORE )
+	scoreText.text = scoreText.text:sub(0, scoreText.text:find(":")) .. tostring( SCORE )
 end
 function resume ()
 	is_pause = 0
+    pausetext.isVisible = false;
 	resumebutton:setEnabled(0)
 	resumebutton.isVisible = false
 end
@@ -64,15 +66,26 @@ function scene:create( event )
 		width = display.contentWidth,
 		height = display.contentHeight,
 		alpha = 1,
-		label = "Пауза. Нажми на любое место на экране, чтобы продолжить",
-		labelColor = { default={1}, over={1} },
 	}
+    local options_pausetext = {
+        text = "Пауза. Нажми на любое место на экране, чтобы продолжить",
+        x = display.contentCenterX,
+        y = display.contentCenterY,
+        width = 120,
+        font = font,
+        fontSize = 20,
+        align = "center",
+    }
+    pausetext = display.newText(options_pausetext)
+    -- pausetext:setFillColor(0, 0, 1)
+    pausetext.isVisible = false
 	resumebutton.isVisible = false;
 	local pausebutton = widget.newButton {
 		onPress = function ( event )
 			is_pause = 1
 			resumebutton.isVisible = true
 			resumebutton:setEnabled(1)
+            pausetext.isVisible = true
 		end,
 		defaultFile = "Images/pause_button.png",
 		top = 0,
@@ -116,7 +129,6 @@ function scene:create( event )
 	sceneGroup:insert(leftbutton)
 	sceneGroup:insert(rightbutton)
 	sceneGroup:insert(pausebutton)
-	sceneGroup:insert(resumebutton)
 
 	scoreText = display.newText( "Очки: " .. tostring( SCORE ), 55, 0, font, 16)
 	sceneGroup:insert(scoreText)
@@ -167,6 +179,8 @@ function scene:create( event )
 
 
 	sceneGroup:insert(problem)
+
+	sceneGroup:insert(resumebutton)
 end
 function scene:show(event)
 	local sceneGroup = self.view
@@ -176,7 +190,6 @@ function scene:show(event)
 		restart()
 		Runtime:addEventListener("enterFrame", onUpdate)
 	end
-
 end
 
 

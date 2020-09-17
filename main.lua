@@ -1,12 +1,11 @@
 local composer = require("composer")
 composer.recycleOnSceneChange = true
 SCORE = 0
-COMPLEXITIES = {"простой", "средний", "сложный"}
-lower_num_limit = 1
-upper_num_limit = 9
-SPEED1 = 0.5
-SPEED2 = 0.7
-SPEED3 = 1
-SPEED = SPEED2
+MIN_NUMBER = 1
+MAX_NUMBER = 100
+upper_num_limit = math.floor((MIN_NUMBER + MAX_NUMBER) / 2)
+speed_min = 0.5
+speed_max = 5
+speed = (speed_min + speed_max) / 2.0
 TYPE = 1
 composer.gotoScene( "Scenes.menu" )

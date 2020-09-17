@@ -4,8 +4,7 @@ local widget = require("widget")
 function scene:create( event )
 	local sceneGroup = self.view
 	display.newRoundedRect(sceneGroup, display.contentCenterX, display.contentCenterY, 240, 300, 20):setFillColor(1)
-	local submitButton = widget.newButton
-	{
+	local submitButton = widget.newButton {
 		alpha = 1,
 		shape = "roundedRect",
 		radius = 20,
