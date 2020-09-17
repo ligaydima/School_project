@@ -9,7 +9,7 @@ function randomize_mul()
     until li[2] ~= li[1]
     repeat
         li[3] = math.random(1, upper_num_limit * upper_num_limit)
-    until li[3] ~= li[1] or li[3] ~= li[2]
+    until li[3] ~= li[1] and li[3] ~= li[2]
     if (math.random(1, 2) == 1) then li[1], li[2] = li[2], li[1] end
     if (math.random(1, 2) == 1) then li[3], li[2] = li[2], li[3] end
     if (math.random(1, 2) == 1) then li[1], li[3] = li[3], li[1] end

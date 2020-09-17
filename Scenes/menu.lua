@@ -35,6 +35,8 @@ function scene:create( event )
         height = 50,
         listener = function (ev)
             speed = speed_min + (speed_max - speed_min) / 100.0 * ev.value
+            prev_speed_slider_val = ev.value
+            print(prev_speed_slider_val)
         end
     })
     limit_slider = widget.newSlider( {
@@ -55,6 +57,9 @@ function scene:create( event )
 
 end
 function scene:show(event)
+    limit_slider:setValue(upper_num_limit)
+    print(prev_speed_slider_val)
+    diff_slider:setValue(prev_speed_slider_val)
 end
 
 
