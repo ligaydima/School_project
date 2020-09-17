@@ -110,6 +110,7 @@ function scene:create( event )
 		labelColor = { default={1 - 215 / 255, 1 - 149 / 255, 1 - 71 / 255}, over={1 - 215 / 255, 1 - 149 / 255, 1 - 71 / 255 } },
 	}
 	leftbutton:setFillColor(20 / 255, 20 / 255, 20 / 255)
+	resumebutton:setFillColor(20 / 255, 20 / 255, 20 / 255)
 
 	rightbutton = widget.newButton {
 		onPress = function ( event )
