@@ -23,7 +23,7 @@ function scene:create( event )
     		-- startbutton:removeSelf();
     		-- ctext:removeSelf();
     		end,
-    	top = 240,
+    	top = 420,
     	left = 80,
     	labelColor = { default={1}, over={1} },
     }
@@ -50,7 +50,24 @@ function scene:create( event )
     sceneGroup:insert(limit_slider)
     sceneGroup:insert(num_text)
     local boundariestext = display.newText("Выберите границы чисел", display.contentCenterX, 130, font, 20)
-
+    local playertext = display.newText("Выберите цвет игрока", display.contentCenterX, 260, font, 20)
+    sceneGroup:insert(playertext)
+    local colortext = display.newText("Выбраный цвет: yellow", display.contentCenterX, 400, font, 20)
+    local pacmans = {}
+    for i=1,#players do
+        pacmans[i]= widget.newButton( {
+            onPress = function (event)
+                choice = i
+                print(i)
+                colortext.text = "Выбраный цвет: "..players[i]
+            end,
+            defaultFile = "Images/pacmans/"..players[i]..".png",
+            top = 280,
+            left = (i - 1) * 110,
+        } )
+        sceneGroup:insert(pacmans[i])
+    end
+    sceneGroup:insert(colortext)
     sceneGroup:insert(startbutton)
     sceneGroup:insert(ctext)
     sceneGroup:insert(boundariestext)

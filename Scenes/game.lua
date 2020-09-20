@@ -170,7 +170,7 @@ function scene:create( event )
 	t3 = display.newText(0, 265, 430, font, 20)
 	box3:insert(t3)
 
-	ball = display.newImageRect( "Images/pacman.png", 80, 80)
+	ball = display.newImageRect( "Images/pacmans/"..players[choice]..".png", 80, 80)
 	ball.x = 160
 	ball.y = 65
 	problem:insert(ball)
